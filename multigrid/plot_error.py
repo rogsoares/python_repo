@@ -12,6 +12,14 @@ def plot_err(err_inf):
     ax.annotate('k = 3', (x[90], err_inf[85, 1]))
     ax.plot(x, err_inf[:, 2], 'b', linewidth=1)
     ax.annotate('k = 6', (x[90], err_inf[85, 2]))
+
+    ax.plot(x, err_inf[:, 3], 'y', linewidth=1)
+    ax.annotate('k = 1', (x[90], err_inf[82, 0]))
+    ax.plot(x, err_inf[:, 4], 'm', linewidth=1)
+    ax.annotate('k = 3', (x[90], err_inf[85, 1]))
+    ax.plot(x, err_inf[:, 5], 'g', linewidth=1)
+    ax.annotate('k = 6', (x[90], err_inf[85, 2]))
+
     ax.legend(loc='upper right')
     ax.set_xlabel('Iterations')
     ax.set_ylabel('Error')

@@ -3,29 +3,8 @@ from numpy import linalg as LA
 
 
 # Método de Jacobi: x^(1) = C * x^(0) + g
-def gseidel(A, x, b, guess, err_inf, n, pos, k_max=100, tol=1e-6):
+def rb_gseidel(A, x, b, guess, err_inf, n, pos, k_max=100, tol=1e-6):
     """This function returns the solution of the system of equations Ax = b by using the iterative Jacobi method """
-
-    # extract matrix diagonal
-    diag = np.diag(A)
-
-    # create g vector
-    g = b/diag
-
-    # define a matrix
-    full_mat = -(A / diag[:, None])
-    np.fill_diagonal(full_mat, .0)
-
-    # define upper and low traingular matrices
-    upper_mat = np.triu(full_mat, k=1)
-    low_mat = np.tril(full_mat, k=0)
-
-    # print('full_mat')
-    # print(full_mat)
-    # print('upper_mat')
-    # print(upper_mat)
-    # print('low_mat')
-    # print(low_mat)
 
     x_old = np.copy(guess)
     x[0:n] = 0
@@ -33,8 +12,13 @@ def gseidel(A, x, b, guess, err_inf, n, pos, k_max=100, tol=1e-6):
     k = 0
     while k < k_max:
 
-        x = g + upper_mat.dot(x_old) + low_mat.dot(x)
-        # x = x + low_mat.dot(x)
+        x[0] = 0.5 * (x_old[1] + b[0])
+        for i in range(2,n,2):
+            x[i] = 0.5*(x_old[i-1] + x_old[i+1])
+
+        for i in range(1,n-1,2):
+            x[i] = 0.5*(x[i-1]+x[i+1])
+        x[n-1] = 0.5 * (x[n - 2] + b[n-1])
 
         # residuum and residuum norm
         res = b - np.dot(A, x)

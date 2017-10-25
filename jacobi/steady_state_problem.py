@@ -1,4 +1,5 @@
 from plot_error import plot_err
+from plot_log_error import plot_lerr
 from plot_guess import plot_guess
 from jacobi import jacobi
 from wjacobi import wjacobi
@@ -96,5 +97,5 @@ def define_steady_state_problem(tpoints):
         maximum = err_inf[0, k]
         err_inf[:, k] = err_inf[:, k] / maximum
 
-    # print(err_inf)
     plot_err(err_inf)
+    plot_lerr(err_inf)

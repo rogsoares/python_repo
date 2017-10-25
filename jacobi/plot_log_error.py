@@ -2,8 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def plot_err(err_inf):
-
+def plot_lerr(err_inf):
     fig, ax = plt.subplots()
     x = np.linspace(0, 100, 100)
     ax.plot(x, err_inf[:, 0], 'k', linewidth=1)
@@ -16,9 +15,6 @@ def plot_err(err_inf):
     ax.set_xlabel('Iterations')
     ax.set_ylabel('Error')
     ax.set_xlim(0, 100)
-    ax.set_ylim(0, 1)
-    #
+    ax.set_yscale('log')
     ax.set_title('Error behaviour for Weighted Jacobi Method: ' + r'$\omega = \frac{2}{3}$')
-    ax.grid(True)
     plt.show()
-    

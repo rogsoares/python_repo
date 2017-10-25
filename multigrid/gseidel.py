@@ -3,34 +3,38 @@ from numpy import linalg as LA
 
 
 # Método de Jacobi: x^(1) = C * x^(0) + g
-def jacobi(A, x, b, guess, err_inf, n, pos, k_max=100, tol=1e-6):
+def gseidel(A, x, b, guess, err_inf, n, pos, k_max=100, tol=1e-6):
     """This function returns the solution of the system of equations Ax = b by using the iterative Jacobi method """
 
-    # print('A:')
-    # print(A)
-
+    # extract matrix diagonal
     diag = np.diag(A)
-    # print('diag:')
-    # print(diag)
 
+    # create g vector
     g = b/diag
-    # print('g:')
-    # print(g)
 
-    C = -(A / diag[:, None])
-    np.fill_diagonal(C,.0)
-    # print('C:')
-    # print(C)
+    # define a matrix
+    full_mat = -(A / diag[:, None])
+    np.fill_diagonal(full_mat, .0)
+
+    # define upper and low traingular matrices
+    upper_mat = np.triu(full_mat, k=1)
+    low_mat = np.tril(full_mat, k=0)
+
+    # print('full_mat')
+    # print(full_mat)
+    # print('upper_mat')
+    # print(upper_mat)
+    # print('low_mat')
+    # print(low_mat)
 
     x_old = np.copy(guess)
-    # print('x_old:')
-    # print(x_old)
+    x[0:n] = 0
 
-    error_norm = 1e6
     k = 0
     while k < k_max:
 
-        x = C.dot(x_old) + g
+        x = g + upper_mat.dot(x_old) + low_mat.dot(x)
+        # x = x + low_mat.dot(x)
 
         # residuum and residuum norm
         res = b - np.dot(A, x)

@@ -2,6 +2,8 @@ from plot_error import plot_err
 from plot_log_error import plot_lerr
 from plot_guess import plot_guess
 from jacobi import jacobi
+from gseidel import gseidel
+from rb_gseidel import rb_gseidel
 from wjacobi import wjacobi
 import numpy as np
 import matplotlib.pyplot as plt
@@ -71,9 +73,11 @@ def define_steady_state_problem(tpoints):
 
         # x = jacobi(A, x, b, guess, err_inf, npoints, pos)
         x = wjacobi(A, x, b, guess, err_inf, w, npoints, pos)
-
+        x = gseidel(A, x, b, guess, err_inf, npoints, pos+3)
+        x = rb_gseidel(A, x, b, guess, err_inf, npoints, pos+6)
         pos = pos + 1
     # end for k
+
 
     # Print solution:
 
@@ -93,7 +97,7 @@ def define_steady_state_problem(tpoints):
 
     # print('err_inf:')
 
-    for k in range(3):
+    for k in range(9):
         maximum = err_inf[0, k]
         err_inf[:, k] = err_inf[:, k] / maximum
 

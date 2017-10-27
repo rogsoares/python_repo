@@ -29,5 +29,5 @@ def plot_lerr(err_inf):
     ax.set_xlim(0, 100)
     ax.set_yscale('log')
     ax.grid(True)
-    ax.set_title('Error behaviour for Weighted Jacobi Method: ' + r'$\omega = \frac{2}{3}$')
+    ax.set_title('Compotamento do erro para três métodos iterativos.')
     plt.show()

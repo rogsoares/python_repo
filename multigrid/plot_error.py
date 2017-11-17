@@ -32,7 +32,7 @@ def plot_err(err_inf):
     ax.set_xlim(0, 100)
     ax.set_ylim(0, 1)
     #
-    ax.set_title('Compotamento do erro para três métodos iterativos.')
+    ax.set_title('Comportamento do erro para três métodos iterativos.')
     ax.grid(True)
     plt.show()
     

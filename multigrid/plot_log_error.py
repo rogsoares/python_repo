@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-
 def plot_lerr(err_inf):
     fig, ax = plt.subplots()
     x = np.linspace(0, 100, 100)

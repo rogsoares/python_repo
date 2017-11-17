@@ -1,7 +1,5 @@
 from plot_error import plot_err
 from plot_log_error import plot_lerr
-from plot_guess import plot_guess
-from jacobi import jacobi
 from gseidel import gseidel
 from rb_gseidel import rb_gseidel
 from wjacobi import wjacobi
@@ -76,26 +74,6 @@ def define_steady_state_problem(tpoints):
         x = gseidel(A, x, b, guess, err_inf, npoints, pos+3)
         x = rb_gseidel(A, x, b, guess, err_inf, npoints, pos+6)
         pos = pos + 1
-    # end for k
-
-
-    # Print solution:
-
-    # grid points coordinates
-    # grid = np.zeros(npoints)
-    # for k in range(npoints):
-    #     grid[k] = k + 1
-    # print(x)
-    # fig, ax = plt.subplots()
-    # ax.plot(grid, x, 'k')
-    # ax.plot(grid, guess, 'r')
-    # ax.set_xlabel('Grid points')
-    # ax.set_ylabel('Solution:')
-    # ax.grid(True)
-    # # ax.set_yscale('log')
-    # plt.show()
-
-    # print('err_inf:')
 
     for k in range(9):
         maximum = err_inf[0, k]

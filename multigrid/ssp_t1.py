@@ -3,6 +3,7 @@
 
 from wjacobi import wjacobi
 from gseidel import gseidel
+from numpy import *
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
@@ -24,7 +25,7 @@ from plot_guess import plot_guess
 def ssp_t1(tpoints):
     # npoints: number of free nodes
     # total de pontos: dirichlel + livres
-    npoints = tpoints - 2
+    npoints = tpoints - 1
 
     # boundary conditions
     u_0 = 0
@@ -60,21 +61,21 @@ def ssp_t1(tpoints):
     err_inf = np.zeros((100, 1))
 
     pos = np.arange(1, npoints+1, 1)
-    v_indices = (np.pi/(npoints+1))*pos
+    print('len(pos): ', pos.size)
+    v_indices = np.pi*pos/(npoints+1)
 
     # guess vector
-    guess = np.sin(v_indices)
-    guess = guess + np.sin(6*v_indices)
-    guess = guess + np.sin(32*v_indices)
-    guess = (1/3)*guess
+    guess = (np.sin(v_indices) + np.sin(6*v_indices) + np.sin(32*v_indices))/3
+    plot_guess(pos,guess)
+    print(pos)
+    print(guess)
 
     wjacobi(A, x, b, guess, err_inf, w, npoints, 0)
-    # gseidel(A, x, b, guess, err_inf, npoints, 0)
+
+    # print(err_inf)
 
     maximum = err_inf[0, 0]
     err_inf[:, 0] = err_inf[:, 0] / maximum
-
-    print(err_inf)
 
     fig, ax = plt.subplots()
     it = np.linspace(0, 100, 100)

@@ -20,13 +20,6 @@ def gseidel(A, x, b, guess, err_inf, n, pos, k_max=100, tol=1e-6):
     upper_mat = np.triu(full_mat, k=1)
     low_mat = np.tril(full_mat, k=0)
 
-    # print('full_mat')
-    # print(full_mat)
-    # print('upper_mat')
-    # print(upper_mat)
-    # print('low_mat')
-    # print(low_mat)
-
     x_old = np.copy(guess)
     x[0:n] = 0
 

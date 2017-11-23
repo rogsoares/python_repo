@@ -1,5 +1,6 @@
 import numpy as np
 from numpy import linalg as LA
+from numpy import matrix as Matrix
 
 
 # Weighted Jacobi Method
@@ -9,26 +10,21 @@ def wjacobi(A, x, b, guess, err_inf, w, n, pos, k_max=100, k=None):
 
     x_old = np.copy(guess)
 
-    identity = np.eye(n)
+    I = np.eye(n)
     d = np.diag(A)
-
-    diagonal = np.zeros(n)
-    for i in range(n):
-        diagonal[i] = 1./d[i]
-
-    diag_inv = np.zeros((n, n))
-    np.fill_diagonal(diag_inv, diagonal)
-
-
+    d = 1/d
+    DI = np.zeros((n, n))
+    np.fill_diagonal(DI, d)
     Rj = np.copy(A)
     np.fill_diagonal(Rj, .0)
-    Rj = diag_inv.dot(Rj)
-    Rw = (w - 1) * identity + w * Rj
-    aux = w * diag_inv.dot(b)
+    Rj = -Rj
+    Rj = np.dot(DI, Rj)
+    Rw = (1 - w) * I + w * Rj
+    fw = w * np.dot(DI, b)
 
     k = 0
     while k < k_max:
-        x = Rw.dot(x_old) + aux
+        x = np.dot(Rw, x_old) + fw
 
         # error and error norm
         err = -np.copy(x)
